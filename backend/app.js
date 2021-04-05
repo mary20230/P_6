@@ -7,6 +7,7 @@ const path = require('path');
 const dotenv = require('dotenv')
 dotenv.config();
 const helmet = require('helmet')
+const configCookie = require('./middlewares/cookie-config');
 const app = express();
 
 const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ugpgo.mongodb.net/P6?retryWrites=true&w=majority`
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(helmet())
+app.use(configCookie);
 app.use(bodyParser.json())
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', saucesRoutes);
