@@ -4,15 +4,14 @@ const mongoose = require('mongoose');
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user')
 const path = require('path');
+const dotenv = require('dotenv')
+dotenv.config();
 const app = express();
 
-mongoose.connect('mongodb+srv://Mary2467:Mary2467@cluster0.ugpgo.mongodb.net/P6?retryWrites=true&w=majority',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ugpgo.mongodb.net/P6?retryWrites=true&w=majority`
+mongoose.connect(connectionString)
+.then(() => console.log('Connection à MongoDb réussie !'))
+.catch(() => console.log('Connection à MongoDb échouée !'))
 
 
 app.use((req, res, next) => {
